@@ -1,0 +1,15 @@
+[2025-09-06 22:12:34,235] 28 root - INFO - 
+
+--------------------------------------------------------------------------------
+[2025-09-06 22:12:34,236] 30 root - INFO - START OF: DATA INGESTION
+[2025-09-06 22:12:34,236] 31 root - INFO - --------------------------------------------------------------------------------
+
+[2025-09-06 22:12:34,236] 17 root - INFO - Initiate the Data Ingestion.
+[2025-09-06 22:12:40,585] 60 root - INFO - Main data saved to feature store as a backup, location: `Artifacts\09_06_2025_22_12_32\data_ingestion\feature_store\phisingData.csv`
+[2025-09-06 22:12:40,590] 72 root - INFO - Train and Test split has been completed.
+[2025-09-06 22:12:40,590] 73 root - INFO - Exited the `split_data_as_train_test` method of the DataIngestion Class.
+[2025-09-06 22:12:40,591] 77 root - INFO - Exporting train and test data.
+[2025-09-06 22:12:40,651] 81 root - INFO - Exported train and test files.
+[2025-09-06 22:12:40,651] 19 root - INFO - Data Ingestion Artifacts: 
+DataIngestionArtifact(trained_file_path='Artifacts\\09_06_2025_22_12_32\\data_ingestion\\ingested\\train.csv', test_file_path='Artifacts\\09_06_2025_22_12_32\\data_ingestion\\ingested\\test.csv')
+[2025-09-06 22:12:40,651] 20 root - INFO - Data Ingestion Completed.
