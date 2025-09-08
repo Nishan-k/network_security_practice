@@ -1,0 +1,28 @@
+[2025-09-08 22:23:01,011] 28 root - INFO - 
+
+--------------------------------------------------------------------------------
+[2025-09-08 22:23:01,011] 30 root - INFO - START OF: DATA INGESTION
+[2025-09-08 22:23:01,011] 31 root - INFO - --------------------------------------------------------------------------------
+
+[2025-09-08 22:23:01,012] 19 root - INFO - Initiate the Data Ingestion.
+[2025-09-08 22:23:07,334] 60 root - INFO - Main data saved to feature store as a backup, location: `Artifacts\09_08_2025_22_22_59\data_ingestion\feature_store\phisingData.csv`
+[2025-09-08 22:23:07,341] 72 root - INFO - Train and Test split has been completed.
+[2025-09-08 22:23:07,341] 73 root - INFO - Exited the `split_data_as_train_test` method of the DataIngestion Class.
+[2025-09-08 22:23:07,342] 77 root - INFO - Exporting train and test data.
+[2025-09-08 22:23:07,402] 81 root - INFO - Exported train and test files.
+[2025-09-08 22:23:07,403] 21 root - INFO - Data Ingestion Artifacts: 
+DataIngestionArtifact(trained_file_path='Artifacts\\09_08_2025_22_22_59\\data_ingestion\\ingested\\train.csv', test_file_path='Artifacts\\09_08_2025_22_22_59\\data_ingestion\\ingested\\test.csv')
+[2025-09-08 22:23:07,403] 22 root - INFO - Data Ingestion Completed.
+[2025-09-08 22:23:07,409] 28 root - INFO - 
+
+--------------------------------------------------------------------------------
+[2025-09-08 22:23:07,409] 30 root - INFO - START OF: DATA VALIDATION
+[2025-09-08 22:23:07,410] 31 root - INFO - --------------------------------------------------------------------------------
+
+[2025-09-08 22:23:07,410] 30 root - INFO - Initiate Data Validation
+[2025-09-08 22:23:07,410] 42 root - INFO - Reading data from: Artifacts\09_08_2025_22_22_59\data_ingestion\ingested\train.csv
+[2025-09-08 22:23:07,440] 42 root - INFO - Reading data from: Artifacts\09_08_2025_22_22_59\data_ingestion\ingested\test.csv
+[2025-09-08 22:23:07,621] 173 root - INFO - The Drift Result: True
+[2025-09-08 22:23:07,622] 32 root - INFO - Data Validation Artifacts: 
+DataValidationArtifact(validation_status=(True, True), valid_train_file_path='Artifacts\\09_08_2025_22_22_59\\data_validation\\valid\\train.csv', valid_test_file_path='Artifacts\\09_08_2025_22_22_59\\data_validation\\valid\\test.csv', invalid_train_file_path='Artifacts\\09_08_2025_22_22_59\\data_validation\\invalid\\train.csv', invalid_test_file_path='Artifacts\\09_08_2025_22_22_59\\data_validation\\invalid\\test.csv', drift_report_file_path='Artifacts\\09_08_2025_22_22_59\\data_validation\\drift_report\\report.yaml')
+[2025-09-08 22:23:07,622] 33 root - INFO - Data Validation Completed.

@@ -30,9 +30,23 @@ class DataValidation:
         errors = []
 
         # Column Names:
-        expected_columns = list(self._schema_config["columns"].keys())
-        if list(df.columns) != expected_columns:
-            errors.append(f"Columns mismatch. Expected: {expected_columns}, found: {list(df.columns)}")
+        expected_columns = set(self._schema_config["columns"].keys())
+        actual_columns = set(df.columns)
+
+        missing_cols = expected_columns - actual_columns
+        extra_cols = actual_columns - expected_columns
+
+        if missing_cols:
+            errors.append(f"Missing columns: {missing_cols}")
+        if extra_cols:
+            errors.append(f"Unexpected columns: {extra_cols}")
+
+
+        # IF we also need to check the order of the column:
+        # for idx, col in enumerate(self._schema_config["columns"].keys()):
+        #     if idx < len(df.columns) and df.columns[idx] != col:
+        #         errors.append(f"Column order mismatch at position {idx}: expected '{col}', got '{df.columns[idx]}'")
+
         
         # Data Types:
         for col, dtype in self._schema_config["columns"].items():
@@ -130,7 +144,7 @@ class DataValidation:
             if not valid:
                 errors.extend([f"[{data_name}] {err}" for err in errs])
             
-            return len(errors) == 0, errors
+        return len(errors) == 0, errors
         
 
     # -------------------------
@@ -167,12 +181,13 @@ class DataValidation:
                 logging.warning(f"Test data invalid: {test_errors}")
 
             # Run data drift only if both train & test are valid
-            drift_status = False
+            no_data_drift = True
             if train_valid and test_valid:
-                drift_status = self.detect_data_drift(base_df=train_df, current_df=test_df)
+                no_data_drift = self.detect_data_drift(base_df=train_df, current_df=test_df)
+                logging.info(f"The Data has no drift: {no_data_drift}")
 
             return DataValidationArtifact(
-                validation_status=train_valid and test_valid,
+                validation_status= (train_valid,  test_valid),
                 valid_train_file_path=gold_train_path,
                 valid_test_file_path=gold_test_path,
                 invalid_train_file_path=self.data_validation_config.invalid_train_file_path,
