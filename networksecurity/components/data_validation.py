@@ -85,9 +85,11 @@ class DataValidation:
 
 
     def validate_duplicates(self, df: pd.DataFrame) -> (bool, list):
+        errors = []
         if df.duplicated().any():
-            return False, ["The data has duplicates, please get rid of the duplicates."]
-        return True, []
+            total_duplicates = df.duplicated().sum()
+            errors.append(f"The data has duplicates, please get rid of the duplicates. Total number of duplicates found: {total_duplicates}")
+        return len(errors) == 0, errors
     
 
 
@@ -100,7 +102,7 @@ class DataValidation:
             threshold = self._schema_config["data_drift"]["threshold"]
 
         drift_report = {}
-        status = True  # assume no drift initially
+        data_has_no_drift = True  # assume no drift initially
 
         for col in base_df.columns:
             if pd.api.types.is_numeric_dtype(base_df[col]):
@@ -119,12 +121,12 @@ class DataValidation:
             }
 
             if pvalue < threshold:
-                status = False
+                data_has_no_drift = False
         
         os.makedirs(os.path.dirname(self.data_validation_config.drift_report_file_path), exist_ok=True)
         write_yaml_file(file_path=self.data_validation_config.drift_report_file_path, content=drift_report)
         
-        return status
+        return data_has_no_drift
 
     
 
@@ -181,10 +183,10 @@ class DataValidation:
                 logging.warning(f"Test data invalid: {test_errors}")
 
             # Run data drift only if both train & test are valid
-            no_data_drift = True
+            data_has_no_drift = True
             if train_valid and test_valid:
-                no_data_drift = self.detect_data_drift(base_df=train_df, current_df=test_df)
-                logging.info(f"The Data has no drift: {no_data_drift}")
+                data_has_no_drift = self.detect_data_drift(base_df=train_df, current_df=test_df)
+                logging.info(f"The Data has no drift: {data_has_no_drift}")
 
             return DataValidationArtifact(
                 validation_status= (train_valid,  test_valid),
